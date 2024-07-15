@@ -22,6 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 /**
  *
  * @author PC
@@ -47,6 +50,7 @@ public class Product implements Serializable{
     private Integer id;
     @Basic(optional = false)
     @Column(name = "name")
+    @Size(min = 1, max = 50, message = "{product.name.errMsg}")
     private String name;
     @Column(name = "description")
     private String description;
@@ -70,6 +74,9 @@ public class Product implements Serializable{
     private Set<Comment> commentSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<OrderDetail> orderDetailSet;
+    
+    @Transient
+    private MultipartFile file;
 
     public Product() {
     }
@@ -202,5 +209,19 @@ public class Product implements Serializable{
     @Override
     public String toString() {
         return "com.dht.pojo.Product[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 }

@@ -65,7 +65,7 @@ public class ProductRepositoryImplement implements ProductRepository{
                 predicates.add(p4);
             }
 
-//            q.where(predicates.toArray(Predicate[]::new));
+            q.where(predicates.toArray(Predicate[]::new));
         }
 
         Query query = s.createQuery(q);
@@ -89,9 +89,9 @@ public class ProductRepositoryImplement implements ProductRepository{
     public void addOrUpdate(Product p) {
         Session s = this.factory.getObject().getCurrentSession();
         if (p.getId() != null) {
-            s.update(s);
+            s.update(p);
         } else {
-            s.save(s);
+            s.save(p);
         }
 
     }
