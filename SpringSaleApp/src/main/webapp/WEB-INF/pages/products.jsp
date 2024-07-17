@@ -19,7 +19,7 @@
     <div class="mb-3 mt-3">
         <label for="name" class="form-label">Tên sản phẩm:</label>
         <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên sản phẩm..." name="name" />
-        <form:errors path="*" element="div" cssClass="alert alert-danger" />
+        <form:errors path="*" element="div" cssClass="alert alert-danger mt-3" />
     </div>
     <div class="mb-3 mt-3">
         <label for="price" class="form-label">Giá sản phẩm:</label>
@@ -27,18 +27,41 @@
     </div>
     <div class="mb-3 mt-3">
         <label for="file" class="form-label">Ảnh sản phẩm:</label>
-        <form:input path="file" type="file" accept=".jpg,.png,.bmp" class="form-control" id="file" name="name" />
+        <form:input path="file" type="file" accept=".jpg,.png" class="form-control" id="file" name="file" />
+        <c:if test="${product.image != null}">
+            <img class="mt-1" src="${product.image}" alt="${product.image}" width="120" />
+        </c:if>
     </div>
     <div class="mb-3 mt-3">
-        <label for="browser" class="form-label">Danh mục:</label>
-        <form:select class="form-select" path="categoryId">
+        <label for="browser" class="form-label">Danh mục: </label>
+        <form:select class="form-select" path="categoryId" >
             <c:forEach items="${categories}" var="c">
-                <option value="${c.id}">${c.name}</option>
+                <c:choose>
+                    <c:when test="${c.id == product.categoryId.id}">
+                        <option value="${c.id}" selected>${c.name}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${c.id}">${c.name}</option>
+                    </c:otherwise>
+                </c:choose>
+
             </c:forEach>
         </form:select>
     </div>
     <div class="mb-3 mt-3">
-        <button class="btn btn-success" type="submit">Thêm sản phẩm</button>
+        <form:hidden path="id" />
+        <form:hidden path="image" />
+        <button class="btn btn-success" type="submit">
+
+            <c:choose>
+                <c:when test="${product.id != null}">
+                    <option value="${c.id}" selected>Cập nhật sản phẩm</option>
+                </c:when>
+                <c:otherwise>
+                    Thêm sản phẩm
+                </c:otherwise>
+            </c:choose>
+        </button>
     </div>
 </form:form>
 
