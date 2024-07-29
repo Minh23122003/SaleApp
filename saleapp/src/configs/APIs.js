@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/SpringSaleApp/api/"
+const BASE_URL = "http://localhost:8085/SpringSaleApp/api/"
 
 export const endpoints = {
     'categories': '/categories',

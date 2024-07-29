@@ -1,16 +1,31 @@
 
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
+import { useSearchParams } from "react-router-dom";
 import APIs, { endpoints } from "../configs/APIs";
 
 const Product = () => {
     const [products, setProducts] = useState(null);
+    const [q] = useSearchParams();
    
     const [page, setPage] = useState(1);
 
     const loadProducts = async () => {
         try {
             let url = `${endpoints['products']}?page=${page}`;
+            
+            let cateId = q.get("cateId");
+            if (cateId !== null){
+                setPage(1)
+                url = `${url}&cateId=${cateId}`
+            }
+
+            let k = q.get("kw");
+            if (k !== null){
+                setPage(1)
+                url = `${url}&q=${k}`
+            }
+
             let res = await APIs.get(url);
 
             console.info(res.data);
@@ -26,10 +41,9 @@ const Product = () => {
         } 
     }
 
-    useEffect(() => {
-       
+    useEffect(() => {    
         loadProducts();
-    }, [page]);
+    }, [page, q]);
 
     const loadMore = () => {
         setPage(page + 1);

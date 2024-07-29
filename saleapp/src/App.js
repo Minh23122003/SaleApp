@@ -1,57 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
-import APIs, { endpoints } from './configs/APIs';
-import { Button, Col, Container, Form, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Product from './components/Product';
+import Footer from './layout/footer';
+import Header from './layout/header';
 
 const App = () => {
-  const [categories, setCategories] = useState([])
-
-  const loadCates = async () => {
-    try {
-      let res = await APIs.get(endpoints['categories'])
-      setCategories(res.data)
-    } catch(ex) {
-      console.info(ex)
-    }
-  }
-
-  useEffect(() => {
-    loadCates();
-  }, [])
-
     return (
-      <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <BrowserRouter>
+        <Header />
         <Container>
-          <Navbar.Brand href="#home">E-commerce Website</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#home">Trang chủ</Nav.Link>
-              <NavDropdown title="Danh mục" id="basic-nav-dropdown">
-                {categories.map(c => <NavDropdown.Item key={c.id} href='#action/3.1'>{c.name}</NavDropdown.Item>)}
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-
-          <Form inline>
-            <Row>
-              <Col xs="auto">
-              <Form.Control type='text' placeholder='Tìm sản phẩm...' className='mr-sm-2' />
-              </Col>
-              <Col xs="auto">
-              <Button type='submit'>Tìm</Button>
-              </Col>
-            </Row>
-          </Form>
+          <Routes>
+            <Route path='/' element={<Product />} />
+          </Routes>
         </Container>
-      </Navbar>
-
-      <Container>
-        <Product />
-      </Container>
-      </>
+        <Footer />
+      </BrowserRouter>
     );
   }
 

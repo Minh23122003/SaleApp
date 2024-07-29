@@ -12,4 +12,6 @@ import com.minh.pojo.User;
  */
 public interface UserRepository {
     User getUserByUsername(String username);
+    boolean authUser(String username, String password);
+    User addUser(User user);
 }
