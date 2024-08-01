@@ -68,8 +68,8 @@ public class UserServiceImplement implements UserService {
         User u = new User();
         u.setFirstName(params.get("firstName"));
         u.setLastName(params.get("lastName"));
-        u.setPhone(params.get("phone"));
-        u.setEmail(params.get("email"));
+        u.setPhone(params.getOrDefault("phone", "1234567890"));
+        u.setEmail(params.getOrDefault("email", "a@gmail.com"));
         u.setUsername(params.get("username"));
         u.setPassword(this.passEncoder.encode(params.get("password")));
         u.setUserRole("ROLE_USER");
